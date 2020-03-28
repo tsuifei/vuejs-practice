@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transitioning Single Elements/Components 進入/離開 & 列表過渡</title>
+    <style>
+      /*指定進場*/
+      .fade-enter-active,
+      .fade-leave-active {
+        transition: opacity 1s;
+      }
+      /*指定出場*/
+      .fade-enter,
+      .fade-leave-to {
+        opacity: 0;
+      }
+
+      /*進出場 中間的過度*/
+      .move-enter-active {
+        transition: all 1s;
+      }
+      .move-leave-active {
+        transition: all 1s;
+      }
+      /*進、出場*/
+      .move-enter,
+      .move-leave-to {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      /* blog 進出場 */
+      /*進出場 中間的過度*/
+      .bloc-enter-active,
+      .bloc-leave-active {
+        transition: all 0.8s ease;
+        width: 100px;
+        height: 100px;
+        background-color: rgb(208, 255, 80);
+      }
+      .bloc-enter {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      .bloc-enter-to,
+      .bloc-leave {
+        opacity: 1;
+      }
+
+      .bloc-leave-to {
+        transform: translateX(100px);
+        opacity: 0;
+      }
+      /* 使用Animation 動畫 */
+      .bounce-enter-active {
+        animation: bounce-in 1s;
+      }
+      .bounce-leave-active {
+        animation: bounce-in 1s reverse;
+      }
+      @keyframes bounce-in {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app1">
+      <!-- 將字慢慢消失、透明度0 -->
+      <button @click="show = !show">Switch1</button>
+      <transition name="fade">
+        <!-- <p v-show="show">Hello Paris</p> -->
+        <p v-if="show">Hello Paris</p>
+      </transition>
+    </div>
+
+    <div id="app2">
+      <button @click="show = !show">Switch2</button>
+      <transition name="move">
+        <p v-show="show">Hello Taipei</p>
+      </transition>
+    </div>
+    <div id="app3">
+      <button @click="destroyApp3">stop</button>
+      <transition name="bloc">
+        <div v-show="show">
+          123
+        </div>
+      </transition>
+    </div>
+
+    <!-- Animation 動畫 -->
+    <div id="app4">
+      <button @click="show = !show">Toggle show</button><br />
+      <transition name="bounce">
+        <p v-if="show" style="display: inline-block">
+          Hello Tainan
+        </p>
+      </transition>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script>
+      const vm1 = new Vue({
+        el: '#app1',
+        data: {
+          show: true
+        }
+      });
+      const vm2 = new Vue({
+        el: '#app2',
+        data: {
+          show: true
+        }
+      });
+      const vm3 = new Vue({
+        el: '#app3',
+        data: {
+          show: true
+        },
+        mounted: function() {
+          var self = this;
+          setInterval(function() {
+            self.show = !self.show;
+          }, 3000);
+        },
+        methods: {
+          // 毀掉App3
+          destroyApp3() {
+            this.$destroy();
+          }
+        }
+      });
+      const vm4 = new Vue({
+        el: '#app4',
+        data: {
+          show: true
+        }
+      });
+    </script>
+  </body>
+</html>

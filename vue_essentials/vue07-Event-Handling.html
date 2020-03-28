@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VueJs Event Handling</title>
+  <style>
+    .box1 {
+      width: 300px;
+      height: 300px;
+      background-color: yellow;
+    }
+
+    .box2 {
+      width: 150px;
+      height: 150px;
+      background-color: green;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <h2>1. 監聽事件綁定</h2>
+    <button @click="test1">test1</button>
+    <!-- 綁定自己的資料 -->
+    <button @click="test2('Hello')">test2</button>
+
+    <!-- 可利用vue的特殊變數$event 來拿到button的值 -->
+    <!-- 等同這樣寫： <button @clock="test3">test3</button> -->
+    <button @click="test3($event)">test3</button>
+
+    <!-- 想傳自己給的變數，同時想取得點取 event 的值 -->
+    <button @click="test4(42,$event )">test4</button>
+
+    <h2>2. 事件修飾符</h2>
+    <h4>防止(stop)事件冒泡</h4>
+    <div class="box1" @click='test5'>
+      <div class="box2" @click.stop='test6'></div>
+    </div>
+    <h4>阻止事件默認行為</h4>
+    <p>如果想阻止事件的默認行為，也就是點擊後不想導向到google去</p>
+    <a href="http://google.com" @click.prevent="test7">去google</a>
+
+    <h2>3. 按鍵修飾符</h2>
+    <h4>想使用enter鍵輸入</h4>
+    <input type="text" @keyup.13="test8">
+    <input type="text" @keyup.enter="test8">
+
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+
+      },
+      methods: {
+        test1() {
+          alert('test1')
+        },
+        test2(msg) {
+          alert(msg)
+        },
+        test3(event) {
+          // 透過 event裡的target與innerHTML去取得按鈕的內容
+          alert(event.target.innerHTML)
+        },
+        test4(nbr, event) {
+          alert(nbr + '---' + event.target.innerHTML)
+
+        },
+        test5() {
+          alert('out')
+        },
+        test6() {
+          // 裡面的div因有冒泡事件的產生， 所以須防止，原生可使用：
+          // event.stopPropagation()，但 vue 有更簡潔的寫法：
+          // 直接在html加修飾符.stop -> @click.stop=""
+          alert('inner')
+        },
+        test7(event) {
+          // 原生可用來阻止，Vue直接在html加修飾符.prevent -> @click.prevent=
+          // event.preventDefault();
+
+          alert('點到了')
+        },
+        test8($event) {
+          // 原生寫法，在vue可直接將鍵碼加到keyup後面 --> keyup.13
+          // 或是keyup.enter 也可以。
+          // if (event.keyCode === 13) {
+          // 以往要取點擊到的資料，可以keycode 查詢鍵碼 entre 鍵碼為13
+          //   alert(event.target.value + '--' + event.keyCode)
+          // }
+          alert(event.target.value + '--' + event.keyCode)
+        }
+
+      }
+    })
+  </script>
+</body>
+
+</html>

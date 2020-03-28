@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Displaying Filtered/Sorted Results </title>
+</head>
+
+<body>
+  <h2>顯示過濾/排序後的結果</h2>
+  <div id="demo">
+    <input type="text" v-model="searchName">
+    <ul>
+      <li v-for="(p, index) in filterPersons" :key="index">
+        {{index}}--{{p.name}}--{{p.age}}
+      </li>
+    </ul>
+    <button @click="setOrderType(2)">Age Ascending order</button>
+    <button @click="setOrderType(1)">Age Descending order</button>
+    <button @click="setOrderType(0)">Order origin</button>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#demo',
+      data: {
+        searchName: '',
+        orderType: 0, // 0代表不排序, 1代表降序, 2代表升序
+        persons: [{
+            name: 'Ayda',
+            age: 24
+          },
+          {
+            name: 'Tracy',
+            age: 18
+          },
+          {
+            name: 'Philippe',
+            age: 42
+          },
+          {
+            name: 'Chalotte',
+            age: 32
+          }
+        ]
+      },
+      computed: {
+        filterPersons() {
+          // 取出相關資料數據
+          const {
+            searchName,
+            persons,
+            orderType
+          } = this
+          // 需要最終顯示的資料數據 + 對persons進行過濾陣列
+          let fPersons = [...persons]
+          fPersons = persons.filter(p => p.name.indexOf(searchName) !== -1)
+
+          // 排序
+          // 確定排序的指標 orderType 不是 0 才繼續排序下去
+          if (orderType !== 0) {
+            fPersons.sort(function (p1, p2) {
+              // 1代表降序, 2代表升序
+              if (orderType === 1) {
+                // 降序
+                return p2.age - p1.age
+                // name 降序
+                // return p2.name - p1.name
+                // return p2.name.localeCompare(p1.name)
+              } else {
+                // 升序
+                return p1.age - p2.age
+                // name 升序
+                // return p1.name - p2.name
+                // return p1.name.localeCompare(p2.name)
+              }
+            })
+          }
+          return fPersons
+        }
+      },
+      methods: {
+        setOrderType(orderType) {
+          this.orderType = orderType
+        }
+      },
+
+    })
+  </script>
+
+</body>
+
+</html>

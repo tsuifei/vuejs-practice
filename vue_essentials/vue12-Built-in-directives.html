@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Built-in-directives 內置指令 / 自定義指令</title>
+    <style>
+      /* 屬性選擇器 */
+      [cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <p ref="content">Hello Paris</p>
+      <button @click="hint">Hint</button>
+      <!-- v-cloak -->
+      <p v-cloak>{{msg}}</p>
+    </div>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"
+    ></script>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'Hello Taipei'
+        },
+        methods: {
+          hint() {
+            alert(this.$refs.content.textContent);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

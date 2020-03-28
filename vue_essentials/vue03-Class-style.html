@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VueJs Class & style</title>
+  <style>
+    .classA {
+      color: red;
+    }
+
+    .classB {
+      color: blue;
+      background: yellow;
+    }
+
+    .classC {
+      font-size: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  當我們在瀏覽網頁時，透過使用者的輸入或動作，最容易會有變動的就是資料（透過輸入或修改），和樣式（透過互動或事件）的更動，而 VueJs 的樣式部分就是用 class 和 style 來綁定的。
+
+
+  1. 理解
+  在應用介面中, 某個(些)元素的樣式是變化的
+  class/style綁定就是專門用來實現動態樣式效果的技術
+  2. class綁定: :class='xxx'
+  xxx是字元串
+  xxx是物件
+  xxx是陣列
+  3. style綁定
+  :style="{ color: activeColor, fontSize: fontSize + 'px' }"
+  其中activeColor/fontSize是data屬性
+
+  <div id="app">
+    <h2>class綁定: :class='xxx'</h2>
+    <p class="classC" :class='myClass'> xxx是字元串</p>
+    <p :class='{classA:isActive, classB:!isActive }'> xxx是物件</p>
+    <p :class='[myClass,hasClass ]'> xxx是陣列</p> <!-- 比較少用 -->
+    <button @click='Update'>Update</button>
+
+    <h2>style綁定</h2>
+    <p :style="{color: activeColor, fontSize: fontSize + 'px'}">color: activeColor, fontSize: fontSize + 'px'</p>
+    <!-- activeColor 和 fontSize 需要去 data 初始化 -->
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        myClass: 'classA',
+        hasClass: 'classB',
+        isActive: true,
+        activeColor: 'gray',
+        fontSize: '20px'
+      },
+      methods: {
+        Update() {
+          this.myClass = this.hasClass
+          this.isActive = true
+          this.activeColor = 'pink'
+          this.fontSize = 30
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

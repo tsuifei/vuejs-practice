@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conditional Rendering 條件選染</title>
+</head>
+
+<body>
+
+  <div id="app">
+    <p v-if="success">成功</p>
+    <p v-else>失敗</p>
+
+    <button @click="success=!success">Switch</button>
+    <!-- 以 v-show 達成一樣效果  -->
+    <p v-show="success">已完成</p>
+    <p v-show="!success">未完成</p>
+
+    <h2>v-if-else multiple </h2>
+    <p v-if="light==='red'">紅燈</p>
+    <p v-else-if="light==='green'">綠燈</p>
+    <p v-else-if="light==='yellow'">黃燈</p>
+    <p v-else>燈壞了</p>
+
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+  <script>
+    // 若是沒有開啟Devtools工具，在開發環境中開啟，在生產環境中關閉
+    // if (process.env.NODE_ENV == 'development') {
+    //   Vue.config.devtools = true;
+    // } else {
+    //   Vue.config.devtools = false;
+
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        success: false,
+        light: ''
+      }
+    })
+  </script>
+</body>
+
+</html>

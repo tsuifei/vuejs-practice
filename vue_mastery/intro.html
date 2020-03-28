@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Mastery Courses</title>
+    <style>
+      .color-box {
+        width: 40px;
+        height: 40px;
+        margin-top: 5px;
+      }
+      .product-image img{
+        width: 200px;
+      }
+      .disabledButton{
+        background-color: #d8d8d8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>VueJs Class and Style Binding</h1>
+    <div id="app">
+      <h2>{{product}}</h2>
+      <div class="product-image">
+        <img v-bind:src="image" alt="">
+      </div>
+      <div class="product-info">
+      <p v-if="isStock">in Stock</p>
+      <p v-if="inventory > 10">in Stock</p>
+      <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out</p>
+      <p v-else>Out of sold</p>
+
+      <ul>
+        <li v-for="detail in details">{{detail}}</li>
+      </ul>
+      <div
+        v-for="product in products"
+        :key="product.productId"
+        class="color-box"
+        :style="{backgroundColor:product.productColor}"
+        @mouseover="updateProduct(product.productImage)"
+      >
+        <p>{{ product.productColor }}</p>
+      </div>
+    </div>
+     <button v-on:click="addToCart" :disabled="!isStock"
+    :class="{disabledButton: !isStock}">Add to Cart</button> 
+<div class="cart">
+  <!-- <p>Cart({{cart}})</p> -->
+</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          product: 'Socks',
+          image:'./images/T_red.jpg',
+          isStock: true,
+          inventory: 0,
+          details: ['80% cotton', '20%polyester', 'Gender-neutral'],
+          products: [
+            {
+              productId: 001,
+              productColor: 'red'
+            },
+            {
+              productId: 002,
+              productColor: 'gray'
+            }
+          ]
+        }
+      });
+    </script>
+
+    <!-- note 
+綁定style的方式有以下幾種
+第一種:
+<h1 :style="{color:color}">...</h1>
+<p :style="{fontSize:fontSize}">...</p>
+<script>
+      data: {
+        color: 'reg';
+        fontSize:'13px'
+      }
+    </script>
+    ------------
+    第二種，以物件的方式
+    <span :style="styleObject">...</span>
+    <script>
+      data: {
+        styleObject: {
+          color: 'reg';
+          fontSize: '13px';
+        }
+      }
+    </script>
+    ------------
+    第三種，以陣列的方式
+
+    <p :style="[styleObject,styleObject2]">...</p>
+    <script>
+      data:{
+        styleObject: {
+              color: 'reg',
+              fontSize: '13px'
+            }
+            styleObject2: {
+              margin: '5px',
+              padding: '20px'
+            }
+      }
+
+      Class Bindings 樣式類別綁定
+    <div class="color-box"
+      :class="{active: activeClass, 'text-danger': errorClass}">...
+      
+    </div>
+    <script>
+      data:{
+        activeClass:true,
+        errorClass:false,
+      }
+    </script>
+
+    物件方式
+     <div class="classObject">...</div>
+    <script>
+      data:{
+        classObject:{
+          active:true,
+          danger:false,
+        }
+      }
+    </script>
+ 陣列方式
+     <div class="[classObject, errorClass]">...</div>
+    <script>
+      data:{
+        activeClass:'active',
+        errorClass: 'text-danger',
+        }
+      }
+    </script>
+
+    條件式
+     <div class="[isActive ? activeClass : '']">...</div>
+    <script>
+      data:{
+        isActive:true,
+        activeClass:'active',
+        }
+      }
+    </script>
+
+      -->
+
+    </script>
+
+  </body>
+</html>
