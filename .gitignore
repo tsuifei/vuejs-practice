@@ -1,0 +1,13 @@
+#                #表示此為註釋,將被Git忽略
+# *				 #忽略.gitignore文件所在文件夾的所有文件
+# *.pyc            #表示忽略所有 .pyc 結尾的文件
+# !model.pyc       #但model.pyc除外
+# /TODO            #僅僅忽略項目根目錄下的 TODO 文件，不包括subdir/TODO(根目錄是倉庫的一級目錄，注意是忽略文件，不是文件夾)
+# checkpoint/      #忽略checkpoint文件夾（整個文件夾都會被忽略，包括空文件夾）
+# utils/resnet.pyc #忽略utils文件夾下的resnet.pyc文件
+# !utils/*.py      #加上!不是忽略文件，而是指定要將哪些文件添加到版本管理中。將utils下的所有py文件添加到版本管理中
+
+.DS_Store
+
+＃忽略檔案夾
+vue_test/*

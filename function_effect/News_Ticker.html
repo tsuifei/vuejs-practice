@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Ticker</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <h4>以 v-on 實做 News Ticker 效果</h4>
+    <div id="app">
+      <button @click="activeNewsTicker">Active</button>
+      <button @click="stopNewsTicker">Stop</button>
+      <h4>{{ msg }}</h4>
+    </div>
+
+    <script>
+      let vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'Hello Paris, tu es une ville meilleur ',
+          interval: null,
+        },
+        methods: {
+          activeNewsTicker() {
+            if (this.interval != null) return;
+            this.interval = setInterval(() => {
+              // 取到第一個字母
+              let startLetter = this.msg.substring(0, 1);
+              // 取到第一個字母之後所有的字母
+              let endLetter = this.msg.substring(1);
+              // 重新拼後 給 msg 變數
+              this.msg = endLetter + startLetter;
+            }, 300);
+          },
+          stopNewsTicker() {
+            // 清除定時器
+            clearInterval(this.interval);
+            // 把 stop 重置成null active才可以被執行。
+            this.interval = null;
+          },
+        },
+      });
+      /*
+      1. 在`active`按鈕綁定點擊事件`v-on`
+      2. 在點擊事件函式中，寫相關的邏輯，拿到`msg`字串，調用字串的函式substring來進行擷取動作，將第一個字母移動到字串最後一個字母的位置。
+      3. 為了點擊按鈕啟動自動擷取的的功能，需要把步驟2中的部分放入「定時器」。
+
+      Vue 實例會自動監聽自己data裡所有的資料，資料一但有變化，會自動把最新資料更新到綁定的元素上，自動渲染DOM
+      */
+    </script>
+  </body>
+</html>

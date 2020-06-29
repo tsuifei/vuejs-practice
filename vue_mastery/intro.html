@@ -19,9 +19,10 @@
     </style>
   </head>
   <body>
-    <h1>VueJs Class and Style Binding</h1>
+    <!-- <h1>Vue Mastery</h1> -->
     <div id="app">
-      <h2>{{product}}</h2>
+      <h1>{{ title }}</h1>
+      <h2>{{brand}} {{product}}</h2>
       <div class="product-image">
         <img v-bind:src="image" alt="">
       </div>
@@ -44,8 +45,10 @@
         <p>{{ product.productColor }}</p>
       </div>
     </div>
+    
      <button v-on:click="addToCart" :disabled="!isStock"
-    :class="{disabledButton: !isStock}">Add to Cart</button> 
+    :class="{disabledButton: !isStock}">Add to Cart</button>  
+ 
 <div class="cart">
   <!-- <p>Cart({{cart}})</p> -->
 </div>
@@ -56,6 +59,7 @@
       const vm = new Vue({
         el: '#app',
         data: {
+          brand:'Vue Mastery',
           product: 'Socks',
           image:'./images/T_red.jpg',
           isStock: true,
@@ -70,8 +74,22 @@
               productId: 002,
               productColor: 'gray'
             }
-          ]
-        }
+          ],
+          cart:0
+        },
+        methods: {
+          addToCart(){
+            this.cart += 1
+          },
+          updateProduct(productImage){
+            this.image=productImage
+          }
+        },
+        computed: {
+          title(){
+            return this.brand + ' ' + this.product
+          }
+        },
       });
     </script>
 
@@ -155,7 +173,23 @@
       }
     </script>
 
-      -->
+Git 
+另一種合併方式：rebase = 重新回復到原本的主線，但是會把原本的分支移到指定的點上。「重新定義分支的參考基準」
+ex:
+ex.有兩條從master分出來的分支：cat, dog，如果已經在cat分支上執行`git rebase dog`，那 cat的起始點就會接到dog去，而離開master, 如移花接木般的整條cat分支都移到dog這條分支上。
+回復到上一步 `git reset HEAD^ --hard`
+
+如何取消 rebase ?
+
+可使用reflog 來觀察原本的合併點是從哪裡剪的，取得rebase前一版的[版本碼] 後，執行`git reset [版本碼] --hard` 就可回復到rebase之前的狀態。
+
+回復可使用另一個更方便的指令：`git reset ORIG_HEAD --hard`它會幫我們回復到原來的HEAD
+
+使用rebase的時機？
+使用rebase來合併分支的好處是不會產生一個額外的commit節點
+      
+如果要修改歷史，勁量不要去改已經推去(push)的歷史，因為會對其他人造成困擾。非必要不要使用rebase這個指令去修改已經推出去的歷史。
+-->
 
     </script>
 
